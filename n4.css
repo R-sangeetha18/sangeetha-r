@@ -1,0 +1,39 @@
+*{
+    margin:10px;
+    padding:0px;
+
+}
+nav{
+    background-color: black;
+    color: whitesmoke;
+    margin:0;
+    
+
+}
+ul{
+    margin-left :30%;
+}
+.box{
+     border-color: black;
+     border-width: 2px;
+    border-style: solid;
+    display:flex;
+    flex-wrap:warp;
+    flex-direction: row;
+    justify-content:space-around;
+    width: 400px;
+}
+li,h1,ul{
+    display: inline;
+    margin-right: 10%;
+    color: gray;
+    
+}
+.box{
+    display:inline
+    flex;
+}
+li:hover{
+    color: white;
+    cursor:pointer;
+}
