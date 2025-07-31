@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+         body {
+    font-family: poppins;
+    margin: 10px;
+    padding: 0px;
+    background-color:  #fff;
+
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    background-color: white;
+    /* Dark background */
+    color: black;
+    /* White text */
+    padding: 10px 0;
+    /* Padding on top and bottom */
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  .navbar-brand {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: black;
+  }
+
+  .navbar-menu {
+    display: flex;
+    /* Display menu items in a row */
+  }
+
+  .navbar-nav {
+    font-size: large;
+    list-style: none;
+    /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Display list items in a row */
+  }
+
+  .nav-item {
+    margin-left: 20px;
+    /* Spacing between menu items */
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* Smooth transition on hover */
+  }
+
+  .nav-link:hover {
+    background-color: #B0E4F4;
+    /* Darker background on hover */
+  }
+
+  /* Hamburger Menu Styles */
+  .navbar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+    /* Initially hidden on larger screens */
+  }
+
+  .navbar-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Responsive Styles (Media Queries) */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      /* Hide menu items on smaller screens */
+      position: absolute;
+      /* Position the menu */
+      top: 100%;
+      /* Below the navbar */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px;
+      text-align: center;
+      z-index: 10;
+      /* Ensure it's above other content */
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      /* Stack menu items vertically */
+    }
+
+    .nav-item {
+      margin: 10px 0;
+      /* Spacing between menu items */
+    }
+
+    .navbar-toggle {
+      display: block;
+      /* Show hamburger menu button */
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon {
+      background-color: transparent;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      transform: rotate(45deg);
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      transform: rotate(-45deg);
+      bottom: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before,
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      bottom: 8px;
+    }
+
+    .navbar-menu.active {
+      display: block;
+      /* Show menu items when active */
+    }
+  }
+
+  .dropdown {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  /* Dropdown Button */
+  .dropdown-button {
+
+    color: black ;
+background-color: white;
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: poppins;
+  }
+
+  .dropdown-button:hover {
+    background-color: #00B4D8;
+  }
+
+  /* Dropdown Content */
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 2px
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f0f0f0;
+    color: blue;
+  }
+
+  /* Show Dropdown on Hover */
+  .dropdown:hover .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+#search-input{
+    border:#00B4D8 2px solid; 
+    border-radius:10px;
+}
+.notification{
+   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  color: #333333;
+  background: aqua;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+.badges{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 25px;
+  height: 25px;
+  background: blue;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+ .form-container {
+            width: 40%;
+           
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border:#00B4D8 1px solid;
+            border-radius: 5px;
+            margin-bottom: 50px;
+            margin-left: 50px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        input{
+             width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #00B4D8;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #87d0de;
+        }
+        .checkbox{
+            display: flex;
+  align-items: center;
+  margin-right: 200px;
+  cursor: pointer;
+        }
+        .radio{
+             display: flex;
+  align-items: center;
+  margin-right: 200px;
+  cursor: pointer;
+        }
+      .required::after {
+        content: ' *';
+        color: red;
+      }
+       .container {
+      display: flex; /* Enables flexbox */
+      justify-content: space-between; /* Adjusts spacing between child divs */
+      align-items: center; /* Aligns items vertically */
+     
+      padding: 10px;
+    }
+     .card-container{
+      width: 40%; /* Adjust width as needed */
+      
+      background-color: #fff;
+      text-align: center;
+      line-height: 10px; /* Centers text vertically */
+      color: black;
+      font-weight: bold;
+      border:2px solid #00B4D8;
+    border-radius: 10px;
+    }
+    .card {
+      width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-left: 60px;
+    }
+    
+    footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #B0E4F4;
+            color: black;
+            padding: 20px;
+        }
+
+        .column {
+            width: 20%;
+        }
+
+        p {
+            font-size: 20px;
+            
+            margin-bottom: 10px;
+            
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+.fa {
+  padding: 20px;
+  font-size: 10px;
+  width: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #181818;
+  color: white;
+}
+
+.fa-twitter {
+  background: #262728;
+  color: white;
+}
+.fa-instagram {
+  background: #191a1b;
+  color: white;
+}
+.footer{
+  background-color:  #B0E4F4;
+  margin-top: 0;
+}
+#btn{
+    background-color: #00B4D8;
+    border: #00B4D8 2px solid;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-weight: bold;
+    font-size: large;
+}
+</style>
+</head>
+
+<body>
+     <nav class="navbar">
+    <div class="navbar-container">
+      <img src="images/logo.webp" alt="logo" width="100px;">
+      <a href="#" class="navbar-brand">EarthBubs</a>
+      <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+      </button>
+      <div class="navbar-menu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="baby.html" class="nav-link">Home</a>
+          </li>
+          <div class="dropdown">
+            <button class="dropdown-button">Product</button>
+            <div class="dropdown-content">
+              <a href="product.html">Pampers</a>
+              <a href="boys.html">Boy's Fashions</a>
+              <a href="girls.html">Girl's Fashions</a>
+              <a href="soap.html">Soap</a>
+              <a href="stroller.html">Stroller</a>
+              <a href="bottle.html">bottle</a>
+
+            </div>
+          </div>
+          <li class="nav-item">
+            <a href="offer.html" class="nav-link">Offer</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products..." id="search-input">
+        
+      </div>
+      <div class="notification">
+     <span>🛒</span> 
+        <span class="badges">3</span>
+      </i>
+      </div>
+      <i class="fas fa-user"></i>
+    </div>
+  </nav>
+  <hr>
+
+  <div>
+    <p style="font-size: 1.5rem;"><b>Home > Payment</b></p></div>
+    <h1>Details</h1>
+    <div class="container">
+   <div class="form-container">
+        <form>
+            <label for="username" class="required">FirstName</label>
+            <input type="text" id="username" name="username">
+            <label for="company">Company Name</label>
+            <input type="text" id="company">
+            <label for="address">Street Address</label>
+            <input type="text" id="address">
+            <label for="apartment">Apartment,Floor,etc(Optional)</label>
+            <input type="text" id="apartment">
+            <label for="city" class="required">Tower/city</label>
+            <input type="text" id="city">
+            <label for="phone" class="required">Phone Number</label>
+
+            <label for="email" class="reqired">Email</label>
+            <input type="email" id="email" name="email" >
+
+            <label class="checkbox">
+                <input type="checkbox" id="agree-chckbox">
+                <span class="checkmark"></span>
+                Save this information for faster check-out next time
+            </label>
+        </div></form>
+        <div class="card-container">
+  <h2>Card Total</h2>
+    <div class="card"> Subtotal:     ₹2200</div>
+    <div class="card">Discount:  ₹250</div>
+    <div class="card">Shipping: Free</div>
+    <div class="card">Total: ₹1,950</div>
+      <img src="images/social.png" alt="logo" width="500px;">
+ 
+    <label class="radio">
+        <input type="radio" id="text">Cash on Delivery
+        <span class="radio"> 
+    </span></label>
+       
+<center><button id="btn" style="margin-bottom: 30px; margin-top:20px;">Place Order</button></center> 
+   </div> 
+   </div>
+   <center>
+   <a href="cart.html" class="carousel-button prev-button">Previous</a>
+<a href="completed.html" class="carousel-button next-button">Next</a></center>
+   <footer>
+  <div class="column">
+    <p>Know</p>
+    <hr>
+    <ul>
+      <li>About us</li>
+      <li>About EarthBubs Store</li>
+      <li>Bulk Purchase & Corporate Gifts</li>
+    </ul>
+  </div>
+  <div class="column">
+    <p>Terms & conditions</p>
+    <hr>
+    <ul>
+      <li>Shipping & Return Policies</li>
+      <li>Privacy Policy</li>
+      <li>FAQ's</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p><a href="contact.html"style="cursor: pointer; text-decoration:none;color:black;">Contact Us</a></p>
+    <hr>
+    <ul>
+      <li>for Sale:Earthbubs@co.in</li>
+      <li>call:+91 1234567890</li>
+      <li>For Complaints:1800 202 2222</li>
+      <li>Chat Time:Our Team Avaliable from Monday to Satuday From:9.00AM to 8.00PM</li>
+      <li>For Complaints:Ebcustomercare.com</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p>Follow us</p>
+    <hr>
+    <ul>
+      <li><a href="#" class="fa fa-facebook"></a></li>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-instagram"></a>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <hr>
+  <p><center> Copyright &copy2025 All Rights Reserved</center></p>
+</div>
+</footer>    

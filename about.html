@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: poppins;
+            margin: 10px;
+            padding: 0px;
+            background-color: #fff;
+
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: white;
+            /* Dark background */
+            color: black;
+            /* White text */
+            padding: 10px 0;
+            /* Padding on top and bottom */
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            /* Space out items */
+            align-items: center;
+            /* Vertically align items */
+            padding: 0 20px;
+            /* Padding on left and right */
+            max-width: 1200px;
+            /* Maximum width for larger screens */
+            margin: 0 auto;
+            /* Center the navbar content */
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            text-decoration: none;
+            color: black;
+        }
+
+        .navbar-menu {
+            display: flex;
+            /* Display menu items in a row */
+        }
+
+        .navbar-nav {
+            font-size: large;
+            list-style: none;
+            /* Remove bullet points */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            /* Display list items in a row */
+        }
+
+        .nav-item {
+            margin-left: 20px;
+            /* Spacing between menu items */
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            /* Smooth transition on hover */
+        }
+
+        .nav-link:hover {
+            background-color: #B0E4F4;
+            /* Darker background on hover */
+        }
+
+        /* Hamburger Menu Styles */
+        .navbar-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: none;
+            /* Initially hidden on larger screens */
+        }
+
+        .navbar-toggle-icon {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Responsive Styles (Media Queries) */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                /* Hide menu items on smaller screens */
+                position: absolute;
+                /* Position the menu */
+                top: 100%;
+                /* Below the navbar */
+                left: 0;
+                width: 100%;
+                background-color: #333;
+                padding: 10px;
+                text-align: center;
+                z-index: 10;
+                /* Ensure it's above other content */
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                /* Stack menu items vertically */
+            }
+
+            .nav-item {
+                margin: 10px 0;
+                /* Spacing between menu items */
+            }
+
+            .navbar-toggle {
+                display: block;
+                /* Show hamburger menu button */
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon {
+                background-color: transparent;
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon::before {
+                transform: rotate(45deg);
+                top: 8px;
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon::after {
+                transform: rotate(-45deg);
+                bottom: 8px;
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon::before,
+            .navbar-toggle.active .navbar-toggle-icon::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background-color: white;
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon::before {
+                top: 8px;
+            }
+
+            .navbar-toggle.active .navbar-toggle-icon::after {
+                bottom: 8px;
+            }
+
+            .navbar-menu.active {
+                display: block;
+                /* Show menu items when active */
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Button */
+        .dropdown-button {
+            background-color: white;
+            color: black solid;
+
+            font-size: large;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: poppins;
+        }
+
+        .dropdown-button:hover {
+            background-color: #00B4D8;
+        }
+
+        /* Dropdown Content */
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border-radius: 2px
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f0f0;
+            color: blue;
+        }
+
+        /* Show Dropdown on Hover */
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #B0E4F4;
+            color: black;
+            padding: 20px;
+        }
+
+        .column {
+            width: 20%;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .fa {
+            padding: 20px;
+            font-size: 10px;
+            width: 5px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+        }
+
+        .fa:hover {
+            opacity: 0.7;
+        }
+
+        .fa-facebook {
+            background: #181818;
+            color: white;
+        }
+
+        .fa-twitter {
+            background: #262728;
+            color: white;
+        }
+
+        .fa-instagram {
+            background: #191a1b;
+            color: white;
+        }
+
+        .footer {
+            background-color: #B0E4F4;
+            margin-top: 0;
+        }
+        .container {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(400px, 2fr));
+    gap: 20px;
+animation: container 4s;
+
+  }
+        .right-container{
+            float: right;
+            width: 50%;
+        }
+        
+  .left container {
+    float: left;
+    width: 50%;
+    animation: container 4s infinite;
+
+  }
+
+  .right content {
+    margin-left: 130px;
+    margin-top: 90px;
+    animation-delay: 0.2s;
+  }
+
+  .right content {
+    margin-top: 1;
+    margin-bottom: 1.8rem;
+    font-weight: 500;
+    font-size: xx-large;
+    color: white;
+    font-family: poppins;
+    animation-delay: 0.4s;
+
+  }
+@keyframes container{
+    0%,100% {transform: translate(0,0);}
+    25%{transform: translate(50px,-50px);}
+    50%{transform:translate(-50px,50px);}
+    75%{transform: translate(30px,-30px);}
+}
+ 
+
+  .image img {
+    width: 40vw;
+
+  }
+#search-input{
+  border:2px #00B4D8 solid;
+  border-radius: 10px;
+}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+        <img src="images/logo.webp" alt="logo" width="100px;">
+            <a href="#" class="navbar-brand">EarthBubs</a>
+            <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+            <div class="navbar-menu">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="baby.html" class="nav-link">Home</a>
+                    </li>
+                    <div class="dropdown">
+                        <button class="dropdown-button">Product</button>
+                        <div class="dropdown-content">
+                            <a href="product.html">Pampers</a>
+                            <a href="boys.html">Boy's Fashions</a>
+                            <a href="girls.html">Girl's Fashions</a>
+                            <a href="soap.html">Soap</a>
+                            <a href="stroller.html">Stroller</a>
+                            <a href="bottle.html">bottle</a>
+
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a href="offer.html" class="nav-link">Offer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search products..." id="search-input">
+                
+            </div>
+            <a href="cart.html" class="nav-link">🛒</a>
+            <i class="fas fa-user"></i>
+        </div>
+    </nav>
+    <hr>
+    <div>
+        <p style="font-size: 1.5rem;"><b>Home > Products > About Us</b></p>
+        <div class="container">
+            <div class="left container">
+                <img src="images/logo.webp" alt="logo" width="300px;">
+                <h2><center>EarthBubs</center></h2>
+            </div>
+            <div class="right container">
+                <div class="right content">
+                    <h1>About Us</h1>
+                    <p>At EarthBubs, we believe that every baby deserve the safest start in life. That's why we're
+                        dedicated to offering high quality, trusted baby products that combine comfort,care,and
+                        innovation all wrapped in love.Born from a parent's desire for gentle,safe, and natural baby
+                        essentials, our journey began with one goal: to make parenting a little easier, and a lot more
+                        joyful. Form soft diapers and skin-loving care to smart strollers and feeding must haves, every
+                        product we offer is thoughtfully choosen and throughly tested for your baby's well being.We're
+                        more than just a store we're part of your parenting journey. </p>
+                </div>
+                <div class="right content">
+                    <h3>What Makes Us Different:</h3>
+                    <p>🌿Natural,Safe, and Toxin-free ingredients</p>
+                    <p>🛡️Pediatrician & dermatologist approved</p>
+                    <p>👶Designed with real parents in mind</p>
+                    <p>🌏Eco-conscious and cruelty-free practices</p>
+                    <p>❤️10,000+ happy families and growing!</p>
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <center><a href="offer.html" class="carousel-button prev-button">Previous</a>
+<a href="contact.html" class="carousel-button next-button">Next</a></center>
+        <footer>
+            <div class="column">
+                <p>Know</p>
+                <hr>
+                <ul>
+                    <li>About us</li>
+                    <li>About EarthBubs Store</li>
+                    <li>Bulk Purchase & Corporate Gifts</li>
+                </ul>
+            </div>
+            <div class="column">
+                <p>Terms & conditions</p>
+                <hr>
+                <ul>
+                    <li>Shipping & Return Policies</li>
+                    <li>Privacy Policy</li>
+                    <li>FAQ's</li>
+                </ul>
+            </div>
+            <div class="coloumn">
+                <p><a href="contact.html"style="cursor: pointer; text-decoration:none;color:black;">Contact Us</a></p>
+                <hr>
+                <ul>
+                    <li>for Sale:Earthbubs@co.in</li>
+                    <li>call:+91 1234567890</li>
+                    <li>For Complaints:1800 202 2222</li>
+                    <li>Chat Time:Our Team Avaliable from Monday to Satuday From:9.00AM to 8.00PM</li>
+                    <li>For Complaints:Ebcustomercare.com</li>
+                </ul>
+            </div>
+            <div class="coloumn">
+                <p>Follow us</p>
+                <hr>
+                <ul>
+                    <li><a href="#" class="fa fa-facebook"></a></li>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                </ul>
+            </div>
+    </div>
+
+    <div class="footer">
+        <hr>
+        <p>
+            <center> Copyright &copy2025 All Rights Reserved</center>
+        </p>
+    </div>
+    </footer>
+</body>
+
+</html>

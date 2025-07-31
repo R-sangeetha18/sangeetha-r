@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" 
+          href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity=
+"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+   <style>
+         body {
+    font-family: poppins;
+    margin: 10px;
+    padding: 0px;
+    background-color:  #fff;
+
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    background-color: white;
+    /* Dark background */
+    color: black;
+    /* White text */
+    padding: 10px 0;
+    /* Padding on top and bottom */
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  .navbar-brand {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: black;
+  }
+
+  .navbar-menu {
+    display: flex;
+    /* Display menu items in a row */
+  }
+
+  .navbar-nav {
+    font-size: large;
+    list-style: none;
+    /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Display list items in a row */
+  }
+
+  .nav-item {
+    margin-left: 20px;
+    /* Spacing between menu items */
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* Smooth transition on hover */
+  }
+
+  .nav-link:hover {
+    background-color: #B0E4F4;
+    /* Darker background on hover */
+  }
+
+  /* Hamburger Menu Styles */
+  .navbar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+    /* Initially hidden on larger screens */
+  }
+
+  .navbar-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Responsive Styles (Media Queries) */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      /* Hide menu items on smaller screens */
+      position: absolute;
+      /* Position the menu */
+      top: 100%;
+      /* Below the navbar */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px;
+      text-align: center;
+      z-index: 10;
+      /* Ensure it's above other content */
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      /* Stack menu items vertically */
+    }
+
+    .nav-item {
+      margin: 10px 0;
+      /* Spacing between menu items */
+    }
+
+    .navbar-toggle {
+      display: block;
+      /* Show hamburger menu button */
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon {
+      background-color: transparent;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      transform: rotate(45deg);
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      transform: rotate(-45deg);
+      bottom: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before,
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      bottom: 8px;
+    }
+
+    .navbar-menu.active {
+      display: block;
+      /* Show menu items when active */
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Dropdown Button */
+  .dropdown-button {
+    background-color: white;
+    color: black solid;
+
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: poppins;
+  }
+
+  .dropdown-button:hover {
+    background-color: #00B4D8;
+  }
+
+  /* Dropdown Content */
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 2px
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f0f0f0;
+    color: blue;
+  }
+
+  /* Show Dropdown on Hover */
+  .dropdown:hover .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+         .containers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 250px;
+    padding: 20px;
+   
+  }
+
+  .cards {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 250px;
+    transition: transform 0.3s ease;
+    justify-content: space-between;
+    border:2px solid #00B4D8
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+  }
+
+  .card img {
+    width: 100%;
+    height: 200px;
+    padding: 30px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
+  }
+
+  .card-description {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 15px;
+  }
+
+  .card-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .card-button:hover {
+    background-color: #0056b3;
+  }
+
+  .badge {
+    position: absolute;
+    background-color: #007bff;
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-weight: bold;
+
+  }
+
+  .stars {
+    color: #FFD700;
+    /* Gold color for stars */
+    font-size: 24px;
+    margin-top: 10px;
+  }
+footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #B0E4F4;
+            color: black;
+            padding: 20px;
+        }
+
+        .column {
+            width: 20%;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+.fa {
+  padding: 20px;
+  font-size: 10px;
+  width: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #181818;
+  color: white;
+}
+
+.fa-twitter {
+  background: #262728;
+  color: white;
+}
+.fa-instagram {
+  background: #191a1b;
+  color: white;
+}
+.footer{
+  background-color:  #B0E4F4;
+  margin-top: 0;
+}
+#search-input{
+  border:2px #00B4D8 solid;
+  border-radius: 10px;
+}
+   .pagination {
+            padding: 12rem 0 0 22rem;
+        }
+        .page-link {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+     <nav class="navbar">
+    <div class="navbar-container">
+      <img src="images/logo.webp" alt="logo" width="100px;">
+
+      <a href="#" class="navbar-brand">EarthBubs</a>
+      <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+      </button>
+      <div class="navbar-menu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="baby.html" class="nav-link">Home</a>
+          </li>
+          <div class="dropdown">
+            <button class="dropdown-button">Product</button>
+            <div class="dropdown-content">
+              <a href="product.html">Pampers</a>
+              <a href="boys.html">Boy's Fashions</a>
+              <a href="girls.html">Girl's Fashions</a>
+              <a href="soap.html">Soap</a>
+              <a href="stroller.html">Stroller</a>
+              <a href="bottle.html">bottle</a>
+
+            </div>
+          </div>
+          <li class="nav-item">
+            <a href="offre.html" class="nav-link">Offer</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products..." id="search-input">
+       
+      </div>
+       <a href="cart.html" class="nav-link">🛒</a>
+      <i class="fas fa-user"></i>
+    </div>
+  </nav>
+  <hr>
+  <div>
+    <p style="font-size: 1.5rem;"><b>Home > Products >Soap</b></p>
+ <div class="dropdown">
+            <button class="dropdown-button">Filter</button>
+            <div class="dropdown-content">
+              <a href="#">Pampers</a>
+              <a href="#">Boy's Fashions</a>
+              <a href="#">Girl's Fashions</a>
+              <a href="#">Scope</a>
+              <a href="#">Stroller</a>
+              <a href="#">bottle</a>
+
+            </div>
+          </div>
+</div>
+   <div class="containers">
+    <!-- Card 1 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275015.png">
+      <div class="card-content">
+        <h3 class="card-title">Gentle Baby Soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹466.00</del>Price₹380.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275016.png" alt="Product 2">
+      <div class="card-content">
+        <h3 class="card-title">Baby Soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹500.00</del>Price₹325.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275017.png" alt="Product 3">
+      <div class="card-content">
+        <h3 class="card-title">Natural Soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹600.00</del>Price₹599.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275019.png" alt="Product 3">
+      <div class="card-content">
+        <h3 class="card-title">Pro Baby Soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹470.00</del>Price₹320.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275018.png" alt="Product 3">
+      <div class="card-content">
+        <h3 class="card-title">Mee Baby soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹466.00</del>Price₹399.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275031.png" alt="Product 3">
+      <div class="card-content">
+        <h3 class="card-title">Milk Baby Soap</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹980.00</del>Price₹800.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+  </div>
+   <nav aria-label="navigation example">
+        <ul class="pagination border-success">
+            <li><a class="page-link" href="#">Previous</a></li>
+            <li><a class="page-link" href="#">1</a></li>
+            <li><a class="page-link" href="#">2</a></li>
+            <li><a class="page-link" href="#">3</a></li>
+            <li><a class="page-link" href="#">4</a></li>
+            <li><a class="page-link" href="#">5</a></li>
+            <li><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+  <center><a href="girls.html" class="carousel-button prev-button">Previous</a>
+<a href="stroller.html" class="carousel-button next-button">Next</a></center>
+    <footer>
+  <div class="column">
+    <p>Know</p>
+    <hr>
+    <ul>
+      <li>About us</li>
+      <li>About EarthBubs Store</li>
+      <li>Bulk Purchase & Corporate Gifts</li>
+    </ul>
+  </div>
+  <div class="column">
+    <p>Terms & conditions</p>
+    <hr>
+    <ul>
+      <li>Shipping & Return Policies</li>
+      <li>Privacy Policy</li>
+      <li>FAQ's</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p><a href="contact.html"style="cursor: pointer; text-decoration:none;color:black;">Contact Us</a></p>
+    <hr>
+    <ul>
+      <li>for Sale:Earthbubs@co.in</li>
+      <li>call:+91 1234567890</li>
+      <li>For Complaints:1800 202 2222</li>
+      <li>Chat Time:Our Team Avaliable from Monday to Satuday From:9.00AM to 8.00PM</li>
+      <li>For Complaints:Ebcustomercare.com</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p>Follow us</p>
+    <hr>
+    <ul>
+      <li><a href="#" class="fa fa-facebook"></a></li>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-instagram"></a>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <hr>
+  <p><center> Copyright &copy2025 All Rights Reserved</center></p>
+</div>
+</footer>    
+</body>
+</html>

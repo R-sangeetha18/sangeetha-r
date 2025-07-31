@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<title>Responsive Navbar Example</title>
+<style>
+  /* General Styles */
+  body {
+    font-family: poppins;
+    margin: 10px;
+    padding: 0px;
+    background-color:  #fff;
+
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    background-color: white;
+    /* Dark background */
+    color: black;
+    /* White text */
+    padding: 10px 0;
+    /* Padding on top and bottom */
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  .navbar-brand {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: black;
+  }
+
+  .navbar-menu {
+    display: flex;
+    /* Display menu items in a row */
+  }
+
+  .navbar-nav {
+    font-size: large;
+    list-style: none;
+    /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Display list items in a row */
+  }
+
+  .nav-item {
+    margin-left: 20px;
+    /* Spacing between menu items */
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* Smooth transition on hover */
+  }
+
+  .nav-link:hover {
+    background-color: #B0E4F4;
+    /* Darker background on hover */
+  }
+
+  /* Hamburger Menu Styles */
+  .navbar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+    /* Initially hidden on larger screens */
+  }
+
+  .navbar-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Responsive Styles (Media Queries) */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      /* Hide menu items on smaller screens */
+      position: absolute;
+      /* Position the menu */
+      top: 100%;
+      /* Below the navbar */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px;
+      text-align: center;
+      z-index: 10;
+      /* Ensure it's above other content */
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      /* Stack menu items vertically */
+    }
+
+    .nav-item {
+      margin: 10px 0;
+      /* Spacing between menu items */
+    }
+
+    .navbar-toggle {
+      display: block;
+      /* Show hamburger menu button */
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon {
+      background-color: transparent;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      transform: rotate(45deg);
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      transform: rotate(-45deg);
+      bottom: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before,
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      bottom: 8px;
+    }
+
+    .navbar-menu.active {
+      display: block;
+      /* Show menu items when active */
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Dropdown Button */
+  .dropdown-button {
+    background-color: white;
+    color: black solid;
+
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: poppins;
+  }
+
+  .dropdown-button:hover {
+    background-color: #00B4D8;
+  }
+
+  /* Dropdown Content */
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 2px
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f0f0f0;
+    color: blue;
+  }
+
+  /* Show Dropdown on Hover */
+  .dropdown:hover .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .hero{
+    height: max-content;
+  }
+
+  .left-container {
+    float: left;
+    width: 50%;
+
+  }
+
+  .left-content {
+    margin-left: 130px;
+    margin-top: 90px;
+  }
+
+  .left-content {
+    margin-top: 1;
+    margin-bottom: 1.8rem;
+    font-weight: 500;
+    font-size: xx-large;
+    color: white;
+    font-family: poppins;
+
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .image img {
+    width: 40vw;
+
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    
+    border-radius: 10px;
+  }
+
+  .card {
+    border:2px solid #00B4D8;
+    border-radius: 10px;
+    background: white;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .outer-card {
+border:2px solid #00B4D8;
+    background-color:  #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    /* Optional: for spacing if multiple outer cards */
+  }
+
+  .inner-card {
+    background-color: #5ed9f2;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    margin-top: 15px;
+    /* Add space between outer card content and inner card */
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns:
+      repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+
+
+  }
+
+  .containers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+   
+  }
+
+  .cards {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 250px;
+    transition: transform 0.3s ease;
+    justify-content: space-between;
+    border:2px solid #00B4D8
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+  }
+
+  .card img {
+    width: 100%;
+    height: 200px;
+    padding: 30px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
+  }
+
+  .card-description {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 15px;
+  }
+
+  .card-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .card-button:hover {
+    background-color: #0056b3;
+  }
+
+  .badge {
+    position: absolute;
+    background-color: #007bff;
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-weight: bold;
+
+  }
+
+  .stars {
+    color: #FFD700;
+    /* Gold color for stars */
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  .dot {
+    height: 20px;
+    width: 20px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: inline-block;
+
+
+  }
+
+  #demoBWrap {
+    background-image: url(rainbow.jpg);
+    background: linear-gradient(to right,#a3e4f1,transparent);
+    background-position: center;
+    background-size: cover;
+  
+
+
+
+  }
+
+  #demoBWrap {
+    position: relative;
+  }
+
+  #demoBTxt {
+    position: static;
+  }
+
+  #demoBTxt {
+    backdrop-filter: blur(2px);
+  }
+
+   .line-with-diamonds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 2px;
+  background-color:rgb(85, 168, 204); /* Line color */
+  margin: 20px;
+}
+
+.line-with-diamonds::before,
+.line-with-diamonds::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color:rgb(85, 168, 204); /* Diamond color */
+  transform: rotate(45deg); /* Rotate to form a diamond */
+}
+
+.line-with-diamonds::before {
+  left: -10px; /* Adjust position for the starting diamond */
+}
+
+.line-with-diamonds::after {
+  right: -10px; /* Adjust position for the ending diamond */
+}
+.question-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.question-text {
+  margin-right: 70%;
+  font-size: 18px;
+  color: #333;
+}
+
+.icon-circle {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #333;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.icon-circle i {
+  font-size: 14px;
+  color: #333;
+}
+
+.icon-circle:hover {
+  background-color: #333;
+  color: #fff;
+}
+  footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #B0E4F4;
+            color: black;
+            padding: 20px;
+        }
+
+        .column {
+            width: 20%;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+.fa {
+  padding: 20px;
+  font-size: 10px;
+  width: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #181818;
+  color: white;
+}
+
+.fa-twitter {
+  background: #262728;
+  color: white;
+}
+.fa-instagram {
+  background: #191a1b;
+  color: white;
+}
+.footer{
+  background-color:  #B0E4F4;
+  margin-top: 0;
+}
+#search-input{
+  border:2px #00B4D8 solid;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <img src="images/logo.webp" alt="logo" width="100px;">
+      <a href="#" class="navbar-brand">EarthBubs</a>
+      <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+      </button>
+      <div class="navbar-menu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="baby.html" class="nav-link">Home</a>
+          </li>
+          <div class="dropdown">
+            <button class="dropdown-button">Product</button>
+            <div class="dropdown-content">
+              <a href="product.html">Pampers</a>
+              <a href="boys.html">Boy's Fashions</a>
+              <a href="girls.html">Girl's Fashions</a>
+              <a href="soap.html">Soap</a>
+              <a href="stroller.html">Stroller</a>
+              <a href="bottle.html">bottle</a>
+
+            </div>
+          </div>
+          <li class="nav-item">
+            <a href="offer.html" class="nav-link">Offer</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products..." id="search-input">
+              </div>
+     
+        <a href="cart.html" class="nav-link">🛒</a>
+    
+      <i class="fas fa-user"></i>
+    </div>
+  </nav>
+
+
+  <section class="hero">
+
+    <div id="demoBWrap">
+      <div id="demoBTxt">
+        <div class="left-container">
+          <div class="left-content">
+            <h1>Gentle Care for Growing Joy </h1><br><br>
+            <p>Premium baby care products crafted with love,purity,and the softest materials-because your baby deserves
+              the
+              best.</p>
+
+
+          </div>
+        </div>
+        <div class="image">
+          <img src="images/b1.png" alt="image">
+        </div>
+      </div>
+    </div>
+  </section>
+  <div style="text-align: center;">
+    <h1>
+      Featured Catogories
+    </h1>
+    <h2>
+      Everything Your Baby Needs
+    </h2>
+  </div>
+  <div class="card-container"style="border-radius: #007bff;">
+    <div class="card" >
+      <img
+        src="images/mee-mee-breathable-premium-baby-diaper-pants-wetness-indicator-leak-proof-edges-s-96-pieces-product-images-orvu7oy8rid-p602697802-3-202306252316 2.png"
+        alt="image" width="200px">
+      <h1>Diapers & Pampers</h1>
+
+    </div>
+    <div class="card">
+      <img src="images/Frame 1171275010.png" alt="image" width="200px">
+      <h1>Baby Dress</h1>
+
+    </div>
+    <div class="card">
+      <img src="images/Frame 1171275015.png" alt="image" width="200px">
+      <h1>Baby Soap</h1>
+
+    </div>
+    <div class="card">
+      <img src="images/Frame 14.png" alt="image" width="200px">
+      <h1>Baby Soap</h1>
+
+    </div>
+  </div>
+  <div style="text-align: center;">
+    <h1>
+      Why Parents Trust Us.
+    </h1>
+    <h2>
+      Designed with Love.Backed with Science.
+    </h2>
+  </div>
+  <div class="container">
+
+    <div class="outer-card">
+      <img src="images/7722240-512 1.png" alt="image" width="200px">
+      <div class="inner-card">
+        <h3>Dermatalogist Tested</h3>
+        <p>Every product is tested and safe for even the most sensitive baby skin.</p>
+      </div>
+    </div>
+    <div class="outer-card">
+      <img src="images/7722322-512 1.png" alt="image" width="200px">
+      <div class="inner-card">
+        <h3>Dermatalogist Tested</h3>
+        <p>Every product is tested and safe for even the most sensitive baby skin.</p>
+      </div>
+    </div>
+    <div class="outer-card">
+      <img src="images/6566888-512 1.png" alt="image" width="200px">
+      <div class="inner-card">
+        <h3>Dermatalogist Tested</h3>
+        <p>Every product is tested and safe for even the most sensitive baby skin.</p>
+      </div>
+    </div>
+    <div class="outer-card">
+      <img src="images/7454483-512 1.png" alt="image" width="200px">
+      <div class="inner-card">
+        <h3>Dermatalogist Tested</h3>
+        <p>Every product is tested and safe for even the most sensitive baby skin.</p>
+      </div>
+    </div>
+    <div class="outer-card">
+      <img src="images/7769334-512 1.png" alt="image" width="200px">
+      <div class="inner-card">
+        <h3>Dermatalogist Tested</h3>
+        <p>Every product is tested and safe for even the most sensitive baby skin.</p>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: center;">
+    <h1>
+      Best Seller
+    </h1>
+    <h2>
+      Our Most Loved Products
+    </h2>
+  </div>
+  <div class="containers">
+    <!-- Card 1 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Img-card-col.png">
+      <div class="card-content">
+        <h3 class="card-title">Wipes</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹1444.00</del>Price₹1299.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/Frame 1171275003.png" alt="Product 2">
+      <div class="card-content">
+        <h3 class="card-title">Mama Miel Baby</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹1444.00</del>Price₹1299.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="cards">
+      <div class="badge">New</div>
+      <img src="images/image 12.png" alt="Product 3">
+      <div class="card-content">
+        <h3 class="card-title">Zibuyu</h3>
+        <div class="stars">
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+          <span>&#9733;</span>
+        </div>
+        <p class="card-description"><del>MRP:₹1444.00</del>Price₹1299.00</p>
+        <a href="#" class="card-button">Buy</a>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center">
+
+    <p><button class=dot></button>
+      <button class="dot"></button>
+      <button class="dot" style="height: 30px;width: 30px;"></button>
+      <button class="dot"></button>
+      <button class="dot"></button>
+    </p>
+  </div>
+  <div style="text-align: center;">
+    <h1>
+      Trending Products
+    </h1>
+    <h2>
+      Parents Favourites,Baby Approved.
+    </h2>
+  </div>
+  <section class="container">
+    <div class="image">
+      <img src="images/6-baby-stroller-pram-easy-to-fold-with-umbrella-fold-canopy-6-to-original-imagrsfrskubmszc 1.png">
+    </div>
+    <div class="card" style="font: poppins;font-size:2rem;border:none;">
+      <h2>Baby Stroller</h2>
+      <p>Explore the world in comfort with our smooth and stylish baby stroller. Designed for safety, ease, and
+        flexiability.Perfect for every little adventure.Lightweight,foldable,and parent-friendly for life on the go.
+      </p>
+      <button class="card-button">Buy Now</button>
+    </div>
+
+  </section>
+  <section class="container">
+    <div class="card" style="font: poppins;font-size:2rem;border: none;">
+      <h2>Feeding Bottle</h2>
+      <p>The baby feeding bottle is made from 100% BPA-free,safe materials.Its soft silicone nipple feels natural and
+        gentle on the baby's mouth.The anti-colic design helps reduce gas and fussiness during feeding. It's
+        lightweight, easy to hold, and perfect for everyday use. </p>
+      <button class="card-button">Buy Now</button>
+    </div>
+    <div class="image">
+      <img src="images/image 13.png">
+    </div>
+  </section>
+  <section class="container">
+    <div class="image">
+      <img
+        src="images/mee-mee-breathable-premium-baby-diaper-pants-wetness-indicator-leak-proof-edges-s-96-pieces-product-images-orvu7oy8rid-p602697802-3-202306252316 2.png">
+    </div>
+    <div class="card" style="font: poppins;font-size:2rem;border:none;">
+      <h2>Pampers</h2>
+      <p>Keep your baby dry, comfy, and smiling all day with our ultra-soft diapers. Designed with leak-lock technology
+        and breathable layers for extra protection.Gentle on delicate skin,perfect for day & night comfort.
+      </p>
+      <button class="card-button">Buy Now</button>
+    </div>
+  </section>
+  <div style="text-align: center;">
+    <h1>
+      Customer Testimonial
+    </h1>
+    <h2>
+      Parent Favorites,Baby Approved.
+    </h2>
+
+    <img src="images/testimonial.png" alt="Person 3" width="1500px">
+    <div style="text-align: center;">
+      <h1>
+        Frequently Asked Question
+      </h1>
+      <h2>
+        We're Here to Help-Every step of the way.
+      </h2></div>
+     <div class="question-container">
+    <p class="question-text">Are Your Products safe for newborns?</p>
+    <div class="icon-circle">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+   <p style="text-align: start;">Yes,all our products are dermatological tested and made with gentle and non-toxic ingredient that are safe for the newborns and sensitive skin. </p>
+<div class="line-with-diamonds"></div>
+  <div class="question-container">
+    <p class="question-text">How long does delivery take?</p>
+  
+    <div class="icon-circle">
+      <i class="fas fa-chevron-up"></i>
+       </div>
+   </div>
+  
+<div class="line-with-diamonds"></div>
+<div class="question-container">
+    <p class="question-text">Can I return or exchange a product?</p>
+  
+    <div class="icon-circle">
+      <i class="fas fa-chevron-up"></i>
+       </div>
+   </div>
+  
+<div class="line-with-diamonds"></div>
+<div class="question-container">
+    <p class="question-text">What paymment methods do you accept?</p>
+  
+    <div class="icon-circle">
+      <i class="fas fa-chevron-up"></i>
+       </div>
+   </div>
+  
+<div class="line-with-diamonds"></div>
+<div class="question-container">
+    <p class="question-text">Are your skincare products organic or natural?</p>
+  
+    <div class="icon-circle">
+      <i class="fas fa-chevron-up"></i>
+       </div>
+   </div>
+  
+<div class="line-with-diamonds"></div>
+<div class="question-container">
+    <p class="question-text">How can I contact customer support?</p>
+  
+    <div class="icon-circle">
+      <i class="fas fa-chevron-up"></i>
+       </div>
+   </div>
+   <a href="#" class="carousel-button prev-button">Previous</a>
+<a href="product.html" class="carousel-button next-button">Next</a>
+
+<footer>
+  <div class="column">
+    <p>Know</p>
+    <hr>
+    <ul>
+      <li >About us</li>
+      <li>About EarthBubs Store</li>
+      <li>Bulk Purchase & Corporate Gifts</li>
+    </ul>
+  </div>
+  <div class="column">
+    <p>Terms & conditions</p>
+    <hr>
+    <ul>
+      <li>Shipping & Return Policies</li>
+      <li>Privacy Policy</li>
+      <li>FAQ's</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p> <a href="contact.html"style="cursor: pointer; text-decoration:none;color:black;">Contact Us</a></p>
+    <hr>
+    <ul>
+      <li>for Sale:Earthbubs@co.in</li>
+      <li>call:+91 1234567890</li>
+      <li>For Complaints:1800 202 2222</li>
+      <li>Chat Time:Our Team Avaliable from Monday to Satuday From:9.00AM to 8.00PM</li>
+      <li>For Complaints:Ebcustomercare.com</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p>Follow us</p>
+    <hr>
+    <ul>
+      <li><a href="#" class="fa fa-facebook"></a></li>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-instagram"></a>
+    </ul>
+  </div>
+</div>
+<div class="footer">
+  <hr>
+  <p><center> Copyright &copy2025 All Rights Reserved</center></p>
+</div>
+</footer>
+      <script>
+        const navbarToggle = document.querySelector('.navbar-toggle')
+        const navbarMenu = document.querySelector('.navbar-menu')
+
+        navbarToggle.addEventListener('click', () => {
+          navbarToggle.classList.toggle('active')
+          navbarMenu.classList.toggle('active')
+        })
+        function open_menu() {
+          let clicked = document.getElementById('drop-menu');
+          if (clicked.style.display == 'block') {
+            clicked.style.display = 'none';
+          }
+          else {
+            clicked.style.display = 'block';
+          }
+        }
+
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+         body {
+    font-family: poppins;
+    margin: 10px;
+    padding: 0px;
+    background-color:  #fff;
+
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    background-color: white;
+    /* Dark background */
+    color: black;
+    /* White text */
+    padding: 10px 0;
+    /* Padding on top and bottom */
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  .navbar-brand {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: black;
+  }
+
+  .navbar-menu {
+    display: flex;
+    /* Display menu items in a row */
+  }
+
+  .navbar-nav {
+    font-size: large;
+    list-style: none;
+    /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Display list items in a row */
+  }
+
+  .nav-item {
+    margin-left: 20px;
+    /* Spacing between menu items */
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* Smooth transition on hover */
+  }
+
+  .nav-link:hover {
+    background-color: #B0E4F4;
+    /* Darker background on hover */
+  }
+
+  /* Hamburger Menu Styles */
+  .navbar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+    /* Initially hidden on larger screens */
+  }
+
+  .navbar-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Responsive Styles (Media Queries) */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      /* Hide menu items on smaller screens */
+      position: absolute;
+      /* Position the menu */
+      top: 100%;
+      /* Below the navbar */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px;
+      text-align: center;
+      z-index: 10;
+      /* Ensure it's above other content */
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      /* Stack menu items vertically */
+    }
+
+    .nav-item {
+      margin: 10px 0;
+      /* Spacing between menu items */
+    }
+
+    .navbar-toggle {
+      display: block;
+      /* Show hamburger menu button */
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon {
+      background-color: transparent;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      transform: rotate(45deg);
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      transform: rotate(-45deg);
+      bottom: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before,
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::before {
+      top: 8px;
+    }
+
+    .navbar-toggle.active .navbar-toggle-icon::after {
+      bottom: 8px;
+    }
+
+    .navbar-menu.active {
+      display: block;
+      /* Show menu items when active */
+    }
+  }
+
+  .dropdown {
+    display: flex;
+    justify-content: space-between;
+    /* Space out items */
+    align-items: center;
+    /* Vertically align items */
+    padding: 0 20px;
+    /* Padding on left and right */
+    max-width: 1200px;
+    /* Maximum width for larger screens */
+    margin: 0 auto;
+    /* Center the navbar content */
+  }
+
+  /* Dropdown Button */
+  .dropdown-button {
+    background-color: white;
+    color: black solid;
+
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: poppins;
+  }
+
+  .dropdown-button:hover {
+    background-color: #00B4D8;
+  }
+
+  /* Dropdown Content */
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 2px
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f0f0f0;
+    color: blue;
+  }
+
+  /* Show Dropdown on Hover */
+  .dropdown:hover .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap:20px;
+            padding:20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flex-item{
+            flex:1 1 calc(33.333% - 20px);
+            box-sizing:border-box;
+            padding: 20px;
+            background-color: #fff;
+            
+            border-radius:8px;
+            text-align:center;
+         
+        }
+         .flex-item1{
+            flex:1 1 calc(33.333% - 20px);
+            box-sizing:border-box;
+            padding: 20px;
+            background-color: #fff;
+            
+            border-radius:8px;
+            text-align:center;
+         
+        }
+        
+        .flex-item1 .badge {
+            position: absolute;
+            top: 190px;
+            right: 40%;
+            background-color: rgb(10, 163, 233);
+            color: black;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 0 4px 0 4px;
+            transform: translate(50%, -50%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .img-container {
+            width: 90%;
+            height: 80%;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        .stars {
+            color: #FFD700;
+            /* Gold color for stars */
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .dot {
+    height: 20px;
+    width: 20px;
+    background-color: aqua;
+    border-radius: 50%;
+    display: inline-block;
+    border: none;
+
+
+  }
+    .dots {
+    height: 20px;
+    width: 20px;
+    background-color: purple;
+    border-radius: 50%;
+    display: inline-block;
+    border: none;
+
+
+  }
+  .button-container {
+      display: flex; /* Flexbox for row layout */
+      gap: 10px; /* Space between buttons */
+      justify-content: center; /* Center the buttons horizontally */
+      align-items: center; /* Align buttons vertically */
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid aqua;
+      border-radius: 5px;
+    }
+
+    .increment-btn {
+      background-color: aqua;
+    }
+
+    .submit-btn {
+      background-color: rgb(21, 144, 193);
+      color: white;
+      gap: 30px;
+    }
+  
+ 
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3), 4px 7px 15px rgba(0, 0, 0, 0.2),
+    9px 15px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  max-width: 260px;
+}
+ 
+button,
+input {
+  outline: none;
+  border: none;
+  padding: 16px;
+  font-size: 18px;
+}
+ 
+input {
+  width: 100%;
+  text-align: center;
+}
+ 
+button {
+  cursor: pointer;
+}
+button:nth-last-child(1) {
+  border-bottom-right-radius:15px 15px;
+  border-top-right-radius:15px 15px;
+}
+button:nth-child(1) {
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+  table,th
+ {
+            border: 2px solid aqua;
+            border-radius: 10px;
+            padding: 6px;
+        }
+footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #B0E4F4;
+            color: black;
+            padding: 20px;
+        }
+
+        .column {
+            width: 20%;
+        }
+
+        p {
+            font-size: 20px;
+            
+            margin-bottom: 10px;
+            
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+.fa {
+  padding: 20px;
+  font-size: 10px;
+  width: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #181818;
+  color: white;
+}
+
+.fa-twitter {
+  background: #262728;
+  color: white;
+}
+.fa-instagram {
+  background: #191a1b;
+  color: white;
+}
+.footer{
+  background-color:  #B0E4F4;
+  margin-top: 0;
+}
+#search-input{
+    border:#00B4D8 2px solid; 
+    border-radius:10px;
+}
+    </style>
+</head>
+
+<body>
+     <nav class="navbar">
+    <div class="navbar-container">
+      <img src="images/logo.webp" alt="logo" width="100px;">
+      <a href="#" class="navbar-brand">EarthBubs</a>
+      <button type="button" class="navbar-toggle" aria-label="Toggle navigation">
+        <span class="navbar-toggle-icon"></span>
+      </button>
+      <div class="navbar-menu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="baby.html" class="nav-link">Home</a>
+          </li>
+          <div class="dropdown">
+            <button class="dropdown-button">Product</button>
+            <div class="dropdown-content">
+              <a href="product.html">Pampers</a>
+              <a href="boys.html">Boy's Fashions</a>
+              <a href="girls.html">Girl's Fashions</a>
+              <a href="soap.html">Soap</a>
+              <a href="stroller.html">Stroller</a>
+              <a href="bottle.html">bottle</a>
+
+            </div>
+          </div>
+          <li class="nav-item">
+            <a href="offer.html" class="nav-link">Offer</a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products..." id="search-input">
+        
+      </div>
+       <a href="cart.html" class="nav-link">🛒</a>
+      <i class="fas fa-user"></i>
+    </div>
+  </nav>
+  <hr>
+  <div>
+    <p style="font-size: 1.5rem;"><b>Home > Products > Checkout</b></p>
+   <div class="flex-container">
+    <div class="flex-item">
+           <img src="images/Frame 1171275033.png" alt="logo" width="100px;">
+
+    </div>
+    <div class="flex-item1" style="border:blue 1px solid;background-color:aqua;height:700px;">
+        <div class="badge">Coupon:EB55</div>
+            <div class="img-container">
+                <img src="images/Frame 1171274997.png" alt="logo">
+            </div>
+
+    </div>
+    <div class="flex-item">
+        <h2>New Born Pampers Active Baby Diapers, Small, 22 Count & Pampers Baby Dry Diapers</h2>
+        <div class="stars">
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            
+        </div>
+        <p>(18 Reviews) | In Stock</p>
+        <p>Give your baby the gentle care they deserve with EarthBubs Premium Baby Pampers, designed for all-day comfort
+            and protection. Crafted with ultra-soft,breathable materials,these diapers keep your little one dry, happy
+            and rash-free.The super-absobent core lockd in moisture for up to 12 hours of leak-free protection, while
+            the flexible waistband ensures a snug yet comfy fit as your baby moves and plays. Plus, a built-in wetness
+            indicator makes changing time easier than ever.</p>
+          <p> <b> color:</b><button class=dot></button> <button class=dots></button> <b>size:</b> Freesize<br>
+           <del>MRP ₹1044.00</del> <b>Sale Price ₹700.00</b></p>
+          <div class="button-container">
+    <div class="input-group">
+  <button id="decrement">-</button>
+  <input type="number" id="input" value="0" readonly>
+  <button id="increment">+</button>
+</div>
+    <button class="submit-btn">Submit</button>
+  </div>
+  <table align="center">
+    <tr>
+        <th>🚚Free Delivery<br> <u>Enter your postal code for delivery Avaliablity</u></th>
+        
+    </tr>
+    <tr>
+        <th>⟳Return Delivery<br>Free 7 Days Delivery Returns.<u>Details</u></th>
+    </tr>
+  </table>
+
+        </div>
+        </div> 
+    </div>
+    </div>
+   </div>
+   <center><a href="cart.html" class="carousel-button prev-button">Previous</a>
+<a href="payment.html" class="carousel-button next-button">Next</a></center>
+     <footer>
+  <div class="column">
+    <p>Know</p>
+    <hr>
+    <ul>
+      <li>About us</li>
+      <li>About EarthBubs Store</li>
+      <li>Bulk Purchase & Corporate Gifts</li>
+    </ul>
+  </div>
+  <div class="column">
+    <p>Terms & conditions</p>
+    <hr>
+    <ul>
+      <li>Shipping & Return Policies</li>
+      <li>Privacy Policy</li>
+      <li>FAQ's</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p><a href="contact.html"style="cursor: pointer; text-decoration:none;color:black;">Contact Us</a></p>
+    <hr>
+    <ul>
+      <li>for Sale:Earthbubs@co.in</li>
+      <li>call:+91 1234567890</li>
+      <li>For Complaints:1800 202 2222</li>
+      <li>Chat Time:Our Team Avaliable from Monday to Satuday From:9.00AM to 8.00PM</li>
+      <li>For Complaints:Ebcustomercare.com</li>
+    </ul>
+  </div>
+  <div class="coloumn">
+    <p>Follow us</p>
+    <hr>
+    <ul>
+      <li><a href="#" class="fa fa-facebook"></a></li>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-instagram"></a>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <hr>
+  <p><center> Copyright &copy2025 All Rights Reserved</center></p>
+</div>
+</footer>    
+</body>
+
+</html>
